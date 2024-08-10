@@ -1,9 +1,9 @@
-using Domain.Entities;
+using Application.Entities;
 
 namespace Application.Interacting;
 
 public interface IRepositoryBase<in TEntity> 
-  where TEntity : IEntity
+  where TEntity : IEntityDto
 {
   public Task Create(TEntity entity);
 

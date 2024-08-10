@@ -1,8 +1,8 @@
-using Domain.Entities;
+using Application.Entities;
 
 namespace Application.Interacting;
 
-public interface IEventRepository : IRepositoryBase<Event>
+public interface IEventRepository : IRepositoryBase<EventDto>
 {
-  public Task<Event> GetById(Guid eventId);
+  public Task<EventDto> GetById(Guid eventId);
 }

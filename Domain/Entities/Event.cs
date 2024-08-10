@@ -1,6 +1,3 @@
-using System.Data;
-using System.Reflection.Metadata;
-
 namespace Domain.Entities;
 
 public sealed class Event : IEntity

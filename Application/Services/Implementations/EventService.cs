@@ -1,5 +1,7 @@
+using Application.Entities;
 using Application.Interacting;
 using Application.Services.Contracts;
+using AutoMapper;
 using Domain.Entities;
 
 namespace Application.Services.Implementations;
@@ -7,14 +9,15 @@ namespace Application.Services.Implementations;
 /// <summary>
 /// Сервис для работы с событиями
 /// </summary>
-/// <param name="repository"></param>
-public class EventService(IEventRepository repository) : IEventService 
+public class EventService(
+  IEventRepository repository,
+  IMapper mapper) : IEventService 
 {
   /// <summary>
   /// Получить событие по Id
   /// </summary>
   /// <param name="id">Id события</param>
-  public async Task<Event> GetById(Guid id)
+  public async Task<EventDto> GetById(Guid id)
   {
     return await repository.GetById(id);
   }
@@ -26,9 +29,11 @@ public class EventService(IEventRepository repository) : IEventService
   {
     var newEvent = Event.Create(info);
 
-    await repository.Create(newEvent);
+    var eventDto = mapper.Map<Event, EventDto>(newEvent);
 
-    return newEvent.Id;
+    await repository.Create(eventDto);
+
+    return eventDto.Id;
   }
 
   /// <summary>
@@ -36,15 +41,19 @@ public class EventService(IEventRepository repository) : IEventService
   /// </summary>
   /// <param name="description">Описание для обновления</param>
   /// <param name="eventId">Id события</param>
-  public async Task<Event> UpdateInfo(string description, Guid eventId)
+  public async Task<EventDto> UpdateInfo(string description, Guid eventId)
   {
-    var updatingEvent = await repository.GetById(eventId);
+    var updatingEventDto = await repository.GetById(eventId);
+
+    var updatingEvent = mapper.Map<EventDto, Event>(updatingEventDto);
     
     updatingEvent.UpdateInfo(description);
 
-    await repository.Update(updatingEvent);
+    updatingEventDto = mapper.Map(updatingEvent, updatingEventDto);
 
-    return updatingEvent;
+    await repository.Update(updatingEventDto);
+
+    return updatingEventDto;
   }
 
   /// <summary>

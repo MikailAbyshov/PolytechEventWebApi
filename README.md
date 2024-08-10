@@ -1,7 +1,7 @@
 # PolytechEventWebApi
 ## Описание
 
-Проект WebApi для сайта с event-мэнеджера
+Проект WebApi для сайта event-мэнеджера
 
 ## Технологии
 
