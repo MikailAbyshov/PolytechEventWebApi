@@ -9,8 +9,4 @@ public sealed class EventInfoDto : IEntityDto
   public DateTime CreatedAt { get; set; }
   
   public DateTime UpdatedAt { get; set; }
-
-  public Guid EventId { get; set; }
-  
-  public EventDto? Event { get; set; }
 }
