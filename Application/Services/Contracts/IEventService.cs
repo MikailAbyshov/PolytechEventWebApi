@@ -7,7 +7,7 @@ public interface IEventService
 {
   public Task<EventDto> GetById(Guid id);
 
-  public Task<Guid> Create(EventInfo info);
+  public Task<Guid> Create(EventInfo info, string title);
 
   public Task<EventDto> UpdateInfo(string description, Guid eventId);
   

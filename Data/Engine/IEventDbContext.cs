@@ -1,12 +1,14 @@
-using Application.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Data;
+namespace Data.Engine;
 
 public interface IEventDbContext
 {
-  DbSet<EventDto> Events { get; set; }
+  DbSet<Event> Events { get; set; }
+  
+  DbSet<EventInfo> EventInfo { get; set; }
 
   DbSet<TRecord> Set<TRecord>() where TRecord : class;
 

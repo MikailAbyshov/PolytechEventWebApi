@@ -17,9 +17,11 @@ public sealed class EventInfo
 
   public static EventInfo Create(string eventDescription)
   {
-    var info = new EventInfo(eventDescription);
-    info.CreatedAt = DateTime.UtcNow;
-    info.UpdatedAt = DateTime.UtcNow;
+    var info = new EventInfo(eventDescription) 
+      { 
+        CreatedAt = DateTime.UtcNow,
+        UpdatedAt = DateTime.UtcNow 
+      };
     return info;
   }
 

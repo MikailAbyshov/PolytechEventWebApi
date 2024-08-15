@@ -19,21 +19,23 @@ public class EventService(
   /// <param name="id">Id события</param>
   public async Task<EventDto> GetById(Guid id)
   {
-    return await repository.GetById(id);
+    var eventModel = await repository.GetById(id);
+
+    var eventDto = mapper.Map<Event, EventDto>(eventModel);
+
+    return eventDto;
   }
 
   /// <summary>
   /// Создать событие
   /// </summary>
-  public async Task<Guid> Create(EventInfo info)
+  public async Task<Guid> Create(EventInfo info, string title)
   {
-    var newEvent = Event.Create(info);
+    var newEvent = Event.Create(info, title);
 
-    var eventDto = mapper.Map<Event, EventDto>(newEvent);
+    await repository.Create(newEvent);
 
-    await repository.Create(eventDto);
-
-    return eventDto.Id;
+    return newEvent.Id;
   }
 
   /// <summary>
@@ -43,15 +45,13 @@ public class EventService(
   /// <param name="eventId">Id события</param>
   public async Task<EventDto> UpdateInfo(string description, Guid eventId)
   {
-    var updatingEventDto = await repository.GetById(eventId);
-
-    var updatingEvent = mapper.Map<EventDto, Event>(updatingEventDto);
+    var updatingEvent = await repository.GetById(eventId);
     
     updatingEvent.UpdateInfo(description);
 
-    updatingEventDto = mapper.Map(updatingEvent, updatingEventDto);
+    await repository.Update(updatingEvent);
 
-    await repository.Update(updatingEventDto);
+    var updatingEventDto = mapper.Map<Event, EventDto>(updatingEvent);
 
     return updatingEventDto;
   }
