@@ -18,12 +18,8 @@ public sealed class Event : IEntity
 
   public EventInfo Info { get; }
 
-  public static Event Create(EventInfo info, string title)
-  {
-    var newEvent = new Event(Guid.NewGuid(), title, info);
-
-    return newEvent;
-  }
+  public static Event Create(EventInfo info, string title) 
+    => new(Guid.NewGuid(), title, info);
 
   public void UpdateInfo(string description)
   {
